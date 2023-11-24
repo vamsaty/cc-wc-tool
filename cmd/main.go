@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	cs "github.com/vamsaty/cc-utils"
+	cc_utils "github.com/vamsaty/cc-utils"
 	"io"
 	"os"
 	"strings"
@@ -21,7 +21,6 @@ var (
 
 // PanicOnError panics if the error is not nil.
 func PanicOnError(err error) {
-	cs.fs
 	if err != nil {
 		panic(err)
 	}
@@ -87,8 +86,7 @@ func GetTargetFile(fileName string) (file *os.File, err error) {
 	// higher priority is given to the file (than stdin)
 	if fileName != "-" {
 		if len(fileName) > 0 {
-
-			if !FileExists(fileName) {
+			if !cc_utils.FileExists(fileName) {
 				os.Exit(1)
 			}
 			return os.Open(fileName)
