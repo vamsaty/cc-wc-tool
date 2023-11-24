@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	cs "github.com/vamsaty/cc-utils"
 	"io"
 	"os"
 	"strings"
@@ -20,6 +21,7 @@ var (
 
 // PanicOnError panics if the error is not nil.
 func PanicOnError(err error) {
+	cs.fs
 	if err != nil {
 		panic(err)
 	}
@@ -85,6 +87,7 @@ func GetTargetFile(fileName string) (file *os.File, err error) {
 	// higher priority is given to the file (than stdin)
 	if fileName != "-" {
 		if len(fileName) > 0 {
+
 			if !FileExists(fileName) {
 				os.Exit(1)
 			}
@@ -98,19 +101,6 @@ func GetTargetFile(fileName string) (file *os.File, err error) {
 		return os.Stdin, nil
 	}
 	return nil, fmt.Errorf("no input file specified")
-}
-
-// FileExists checks if the file exists.
-func FileExists(fileName string) bool {
-	if fileName == "no_init" {
-		return false
-	}
-	_, err := os.Stat(fileName)
-	if err != nil {
-		fmt.Printf("File %s does not exist\n", fileName)
-		return false
-	}
-	return true
 }
 
 func main() {
